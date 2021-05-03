@@ -1,6 +1,7 @@
 <script>
 import { ref, onMounted, reactive, watch, computed } from "vue";
 import { useStore } from "vuex";
+import { useAnimate } from "@/composition-api";
 export default {
   setup() {
     const store = useStore();
@@ -16,7 +17,9 @@ export default {
     let hasMarket = computed(() => {
       return store.getters.hasMarket;
     });
+    const navBar = ref(null);
 
+    //animate(navBar, "animate__fadeInUp");
     onMounted(() => {
       // 取得城市
       store.dispatch("handGetDistricts").then((res) => {
@@ -25,6 +28,8 @@ export default {
           twZip.city.push(taiwanDistricts[i].name);
         });
       });
+
+      useAnimate(navBar.value, "animate__fadeInUp");
     });
 
     watch(
@@ -127,13 +132,14 @@ export default {
       toggleOptions_type,
       showOptions_type,
       hasMarket,
+      navBar,
     };
   },
 };
 </script>
 <template>
   <div class="desktop_show">
-    <div class="desktop_nav">
+    <div class="desktop_nav" ref="navBar">
       <div class="text_logo">
         TAIWAN PORK
       </div>
@@ -321,7 +327,8 @@ export default {
     cursor: pointer;
     border-bottom: 2px solid transparent;
     &:hover {
-      border-bottom-color: #b4be2b;
+      border-bottom-color: #838d01;
+      color: #838d01;
     }
   }
   .active {

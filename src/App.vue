@@ -22,6 +22,7 @@
 </template>
 
 <style lang="scss">
+@import "~animate.css/animate.min.css";
 * {
   box-sizing: border-box;
 }

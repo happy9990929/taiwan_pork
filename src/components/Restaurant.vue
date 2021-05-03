@@ -1,5 +1,5 @@
 <script>
-import { computed, onMounted, reactive, ref, watch } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import { useStore } from "vuex";
 export default {
   setup() {
@@ -83,7 +83,7 @@ export default {
       } else if (item === "販售") {
         return "sell";
       } else {
-        return "other";
+        return "others";
       }
     };
 
@@ -93,24 +93,36 @@ export default {
 </script>
 <template>
   <div class="restaurants_box">
-    <div
-      :class="['restaurant_box', typeStyle(item.type), 'show']"
-      v-for="item in market_city"
-      :key="item.case_code"
-    >
-      <div class="restaurant">
-        <div class="map_icon">
-          <i class="fas fa-map-marker-alt"></i>
+    <transition-group name="fade">
+      <div
+        :class="['restaurant_box', typeStyle(item.type), 'show']"
+        v-for="item in market_city"
+        :key="item.case_code"
+      >
+        <div class="restaurant">
+          <div class="map_icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <div class="name">{{ item.market_name }}</div>
         </div>
-        <div class="name">{{ item.market_name }}</div>
+        <div>{{ item.addr }}</div>
+        <div>標章代碼: {{ item.badge_code }}</div>
       </div>
-      <div>{{ item.addr }}</div>
-      <div>標章代碼: {{ item.badge_code }}</div>
-    </div>
+    </transition-group>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
+  transform: translateY(0);
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
 .restaurants_box {
   display: flex;
   flex-wrap: wrap;
