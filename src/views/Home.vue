@@ -13,6 +13,7 @@ export default {
 
     onMounted(() => {
       domToMove();
+      setLeaf();
     });
 
     const domToMove = () => {
@@ -37,6 +38,7 @@ export default {
         moveBox.style.left = `${-xWalk * 1 + boxInitLeft}px`;
       }
 
+      // 電腦版才顯示效果
       const doResize = () => {
         if (window.innerWidth > 768) {
           window.addEventListener("mousemove", translate);
@@ -47,6 +49,27 @@ export default {
 
       doResize();
       window.addEventListener("resize", doResize);
+    };
+
+    // 葉子亂數
+    const setLeaf = () => {
+      const banner = document.querySelector(".banner");
+      const leaf = document.querySelector(".leaf");
+      setInterval(() => {
+        const translateX = Math.floor(Math.random() * 1920 + 1); // 亂數位子
+        const animationTime = Math.random() * 8 + 3; // 亂數動畫時間
+        const rotate = Math.random() * 360; // 亂數動畫旋轉
+        const width = Math.random() * 100 + 30; // 亂數寬度
+        const copyLeaf = leaf.cloneNode(true); // copy
+        copyLeaf.style.left = `${translateX}px`;
+        copyLeaf.style.animationDuration = `${animationTime}s`;
+        copyLeaf.style.width = `${width}px`;
+        copyLeaf.children[0].style.transform = `rotate(${rotate}deg)`;
+        banner.append(copyLeaf);
+        setTimeout(() => {
+          copyLeaf.remove();
+        }, 10000);
+      }, 1000);
     };
 
     return { domContent, domMoveBox };
@@ -75,6 +98,9 @@ export default {
         <img src="@/assets/images/pig.png" class="pig moveImg girl1" />
       </div>
     </div>
+    <div class="leaf">
+      <img src="@/assets/images/leaf.png" />
+    </div>
     <div class="arrow">
       <i class="fas fa-angle-down"></i>
     </div>
@@ -95,6 +121,7 @@ export default {
   background-repeat: no-repeat;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 .move_box {
   width: 100%;
@@ -115,6 +142,7 @@ export default {
     position: absolute;
     top: 100px;
     left: calc(50% - 65px);
+    z-index: 1;
   }
 }
 .pig {
@@ -122,6 +150,8 @@ export default {
 }
 .title_box {
   padding-top: 5vh;
+  position: relative;
+  z-index: 1;
 }
 .title_logo {
   height: 12vh;
@@ -148,7 +178,7 @@ export default {
   bottom: 0;
   width: 100%;
   font-size: 4vh;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.5);
 }
 .meat {
   background-attachment: fixed;
@@ -166,6 +196,30 @@ export default {
   @media screen and (min-width: 1200px) {
     background-position: top center;
     height: 400px;
+  }
+}
+.leaf {
+  width: 100px;
+  position: absolute;
+  top: -200px;
+  animation-name: leaf;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
+  opacity: 1;
+  img {
+    max-width: 100%;
+  }
+}
+@keyframes leaf {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
   }
 }
 </style>
