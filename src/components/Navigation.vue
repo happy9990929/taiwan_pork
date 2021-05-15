@@ -18,6 +18,7 @@ export default {
       return store.getters.hasMarket;
     });
     const navBar = ref(null);
+    const type_options = ref(null);
 
     //animate(navBar, "animate__fadeInUp");
     onMounted(() => {
@@ -110,8 +111,12 @@ export default {
       mobileSelect.value.classList.remove("show_options_box");
     };
 
-    const showMarket = (type) => {
+    const showMarket = (type, e) => {
       store.dispatch("handShowMarket", type);
+      type_options.value.children.forEach((item) => {
+        item.classList.remove("active");
+      });
+      e.target.classList.add("active");
     };
 
     return {
@@ -133,6 +138,7 @@ export default {
       showOptions_type,
       hasMarket,
       navBar,
+      type_options,
     };
   },
 };
@@ -181,11 +187,11 @@ export default {
   </div>
 
   <div class="desktop_show" v-if="hasMarket">
-    <ul class="type_options">
-      <li @click="showMarket('all')">全部</li>
-      <li @click="showMarket('food')">餐飲</li>
-      <li @click="showMarket('sell')">販售</li>
-      <li @click="showMarket('others')">其他</li>
+    <ul class="type_options" ref="type_options">
+      <li @click="showMarket('all', $event)" class="active">全部</li>
+      <li @click="showMarket('food', $event)">餐飲</li>
+      <li @click="showMarket('sell', $event)">販售</li>
+      <li @click="showMarket('others', $event)">其他</li>
     </ul>
   </div>
 

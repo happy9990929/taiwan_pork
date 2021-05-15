@@ -56,7 +56,6 @@ export default {
       () => store.getters.typeActive,
       (newVal) => {
         typeActive.value = newVal;
-        console.log(typeActive.value);
         showMarket();
       }
     );

@@ -72,7 +72,12 @@ export default {
       }, 1000);
     };
 
-    return { domContent, domMoveBox };
+    const scrollDown = () => {
+      const banner = document.querySelector(".banner");
+      window.scrollTo({ top: banner.offsetHeight, behavior: "smooth" });
+    };
+
+    return { domContent, domMoveBox, scrollDown };
   },
 };
 </script>
@@ -101,7 +106,7 @@ export default {
     <div class="leaf">
       <img src="@/assets/images/leaf.png" />
     </div>
-    <div class="arrow">
+    <div class="arrow" @click="scrollDown">
       <i class="fas fa-angle-down"></i>
     </div>
   </div>
@@ -175,10 +180,15 @@ export default {
 }
 .arrow {
   position: absolute;
+  left: calc(50% - 5px);
   bottom: 0;
-  width: 100%;
+  width: 10px;
   font-size: 4vh;
   color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  &:hover {
+    color: #fff;
+  }
 }
 .meat {
   background-attachment: fixed;
