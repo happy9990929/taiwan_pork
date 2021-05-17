@@ -27,7 +27,7 @@
   box-sizing: border-box;
 }
 body {
-  font-family: "arial", "Microsoft JhengHei", "SimHei";
+  font-family: "arial", "Microsoft JhengHei", "Microsoft YaHei", "SimHei";
   line-height: 1.5;
   font-size: 4vw;
   @media screen and (min-width: 768px) {

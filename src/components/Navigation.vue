@@ -7,20 +7,19 @@ export default {
     const store = useStore();
     const twZip = reactive({ city: [], area: [] }); // 所有城市、地區
     let taiwanDistricts; // 所有行政區
-    let zipActive = reactive({ city: "", area: "" }); // 選中的城市、地區
+    const zipActive = reactive({ city: "", area: "" }); // 選中的城市、地區
     const cityGroup = ref(null); // 手機版城市
     const areaGroup = ref(null); // 手機版地區
     let showOptions = ref(false); // 手機版城市選項
     let showOptions_type = ref(false); // 手機版類型選項
     const mobileSelect = ref(null);
-    let marketType = reactive([]);
-    let hasMarket = computed(() => {
+    const marketType = reactive([]);
+    const hasMarket = computed(() => {
       return store.getters.hasMarket;
     });
     const navBar = ref(null);
     const type_options = ref(null);
 
-    //animate(navBar, "animate__fadeInUp");
     onMounted(() => {
       // 取得城市
       store.dispatch("handGetDistricts").then((res) => {
@@ -29,7 +28,7 @@ export default {
           twZip.city.push(taiwanDistricts[i].name);
         });
       });
-
+      // 動畫
       useAnimate(navBar.value, "animate__fadeInUp");
     });
 
@@ -59,7 +58,7 @@ export default {
       showOptions_type.value = false;
       mobileSelect.value.classList.remove("show_options_box");
     };
-
+    // 選中的城市
     const getActiveCity = (item, e) => {
       zipActive.city = item;
       cityGroup.value.children.forEach((item) => {
@@ -67,7 +66,7 @@ export default {
       });
       e.target.classList.add("active");
     };
-
+    // 選中的區域
     const getActiveArea = (item, e) => {
       zipActive.area = item;
       areaGroup.value.children.forEach((item) => {
@@ -75,7 +74,7 @@ export default {
       });
       e.target.classList.add("active");
     };
-
+    //重置按鈕
     const resetBtn = () => {
       areaGroup.value.children.forEach((item) => {
         item.classList.remove("active");
@@ -84,7 +83,7 @@ export default {
         item.classList.remove("active");
       });
     };
-
+    // 手機板選地區
     const toggleOptions = () => {
       showOptions.value = !showOptions.value;
       if (showOptions.value) {
@@ -94,7 +93,7 @@ export default {
         mobileSelect.value.classList.remove("show_options_box");
       }
     };
-
+    // 手機板選類型
     const toggleOptions_type = () => {
       showOptions_type.value = !showOptions_type.value;
       if (showOptions_type.value) {
@@ -104,13 +103,14 @@ export default {
         mobileSelect.value.classList.remove("show_options_box");
       }
     };
-
+    // 手機板隱藏選項
     const hideOptions = () => {
       showOptions.value = false;
       showOptions_type.value = false;
       mobileSelect.value.classList.remove("show_options_box");
     };
 
+    //選擇類型
     const showMarket = (type, e) => {
       store.dispatch("handShowMarket", type);
       type_options.value.children.forEach((item) => {

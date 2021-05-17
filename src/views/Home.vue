@@ -186,8 +186,17 @@ export default {
   font-size: 4vh;
   color: rgba(255, 255, 255, 0.5);
   cursor: pointer;
+  animation: arrow 2s infinite forwards;
   &:hover {
     color: #fff;
+  }
+}
+@keyframes arrow {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
   }
 }
 .meat {
