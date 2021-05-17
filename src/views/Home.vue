@@ -143,11 +143,12 @@ export default {
   }
 }
 .pig_box {
+  position: relative;
+  z-index: 1;
   @media screen and (min-width: 768px) {
     position: absolute;
     top: 100px;
     left: calc(50% - 65px);
-    z-index: 1;
   }
 }
 .pig {

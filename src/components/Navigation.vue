@@ -19,6 +19,7 @@ export default {
     });
     const navBar = ref(null);
     const type_options = ref(null);
+    const type_options_m = ref(null);
 
     onMounted(() => {
       // 取得城市
@@ -116,6 +117,9 @@ export default {
       type_options.value.children.forEach((item) => {
         item.classList.remove("active");
       });
+      type_options_m.value.children.forEach((item) => {
+        item.classList.remove("active");
+      });
       e.target.classList.add("active");
     };
 
@@ -139,6 +143,7 @@ export default {
       hasMarket,
       navBar,
       type_options,
+      type_options_m,
     };
   },
 };
@@ -236,11 +241,19 @@ export default {
     </div>
     <div v-show="showOptions_type">
       <div class="options_line">
-        <ul class="show_options type_options_m">
-          <li class="show_options_list" @click="showMarket('all')">全部</li>
-          <li class="show_options_list" @click="showMarket('food')">餐飲</li>
-          <li class="show_options_list" @click="showMarket('sell')">販售</li>
-          <li class="show_options_list" @click="showMarket('others')">其他</li>
+        <ul class="show_options type_options_m" ref="type_options_m">
+          <li class="show_options_list" @click="showMarket('all', $event)">
+            全部
+          </li>
+          <li class="show_options_list" @click="showMarket('food', $event)">
+            餐飲
+          </li>
+          <li class="show_options_list" @click="showMarket('sell', $event)">
+            販售
+          </li>
+          <li class="show_options_list" @click="showMarket('others', $event)">
+            其他
+          </li>
         </ul>
       </div>
     </div>
@@ -378,6 +391,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
+  z-index: 10;
 }
 .options_line {
   border-top: 1px solid #777777;
